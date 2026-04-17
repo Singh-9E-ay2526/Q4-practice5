@@ -1,34 +1,27 @@
-function promptForPassword() {
-    while (true) {
-        const password = prompt("Enter a password (at least 4 characters):");
+let passCount = 0;
+
+function setPass() {
+    let password = "";
+
+    do {
+        password = prompt("Enter a password longer than 4 characters", "");
         if (password === null) {
-            alert("Password entry canceled.");
             return;
         }
+    } while (password.length < 5);
 
-        if (password.length >= 4) {
-            alert("Password accepted!");
-            return;
-        }
-
-        alert("Password must be at least 4 characters. Please try again.");
+    passCount += 1;
+    const counterDisplay = document.getElementById("counterDisplay");
+    if (counterDisplay) {
+        counterDisplay.textContent = `Pass count: ${passCount}`;
     }
+
+    window.alert("Password set successfully!");
 }
 
-promptForPassword();
-
-document.addEventListener("DOMContentLoaded", () => {
-    const incrementButton = document.getElementById("incrementBtn");
-    const counterDisplay = document.getElementById("counterDisplay");
-
-    if (!incrementButton || !counterDisplay) {
-        console.error("Increment button or counter display not found.");
-        return;
-    }
-
-    let passCount = 0;
-    incrementButton.addEventListener("click", () => {
-        passCount += 1;
-        counterDisplay.textContent = `Pass count: ${passCount}`;
-    });
-});
+const incrementBtn = document.getElementById("incrementBtn");
+if (incrementBtn) {
+    incrementBtn.addEventListener("click", setPass);
+} else {
+    console.error("Button with id 'incrementBtn' not found.");
+}
